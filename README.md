@@ -130,10 +130,10 @@ Board data lives only in local browser storage, so the **Backup** panel at the b
 
 | Action | Result |
 |---|---|
-| **Export** | Downloads a timestamped JSON file and fills the text box with the same content |
-| **Copy text** | Copies the current backup JSON to the clipboard |
-| **Import file** | Loads a `.json` file into the text box (does not apply it yet) |
-| **Restore** | Applies the JSON currently in the text box, replacing the board. Requires a second click to confirm when existing data would be overwritten |
+| Export | Downloads a timestamped JSON file and fills the text box with the same content |
+| Copy text | Copies the current backup JSON to the clipboard |
+| Import file | Loads a `.json` file into the text box (does not apply it yet) |
+| Restore | Applies the JSON currently in the text box, replacing the board |
 
 > [!WARNING]
 > **Restore replaces the entire board.** There is no undo beyond whatever backup you made beforehand. Export before restoring if you want to keep the current state as a fallback.
@@ -167,11 +167,10 @@ Example backup shape:
 | Environment | Backend used |
 |---|---|
 | Opened inside a Claude artifact | Claude's artifact storage API |
-| Opened as a local file / regular web page | Browser `localStorage` |
-| Storage blocked (e.g. some private-browsing modes) | None — a warning banner appears and **Export** becomes the only way to keep your data |
+| Opened as a local file | Browser `localStorage` |
 
 > [!TIP]
-> Because storage is scoped to the browser (and, for local files, sometimes to the exact file path), keep a recent export handy if you rely on this across multiple machines or browser profiles.
+> Because storage is scoped to the browser (and, for local files, sometimes to the exact file path), keep a recent export handy if you rely on this across multiple machines or browser profiles. In addition, if a private browser is used, a warning banner appears and **Export** is the only way to keep your data.
 
 ---
 
