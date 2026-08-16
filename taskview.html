@@ -1,0 +1,1952 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects</title>
+<style>
+  :root {
+    --paper: #E7E9EF;
+    --card: #FBFBFD;
+    --ink: #161A26;
+    --muted: #6C7288;
+    --line: #D6DAE4;
+    --track: #DFE3EC;
+    --fill: #2E5BD8;
+    --imp1: #161A26;
+    --imp2: #2E8B57;
+    --imp3: #2E5BD8;
+    --imp4: #CC3B2E;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1105px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+
+  /* ---------- header ---------- */
+
+  header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 6px;
+  }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    margin: 0;
+    min-width: 0;
+  }
+
+  #title {
+    font: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    padding: 0 0 2px;
+    max-width: 100%;
+    field-sizing: content;
+  }
+  #title:hover { border-bottom-color: var(--line); }
+  #title:focus { outline: none; border-bottom-color: var(--fill); }
+
+  .logo {
+    flex: 0 0 auto;
+    padding-bottom: 3px;
+    line-height: 0;
+  }
+  .logo svg {
+    display: block;
+    height: 30px;
+    width: auto;
+  }
+  @media (max-width: 700px) {
+    .logo svg { height: 24px; }
+  }
+
+  .subhead {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 20px;
+  }
+
+  .sorter {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  select {
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: var(--ink);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 2px 2px 3px;
+    border-radius: 0;
+  }
+
+  .filter {
+    width: 100%;
+    font: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 9px 12px;
+    margin-bottom: 18px;
+  }
+  .filter::placeholder { color: var(--muted); }
+  .filter:focus { outline: none; border-color: var(--fill); }
+
+  .section-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .section-bar .section-head { margin: 0; }
+  .btn.small { padding: 5px 10px; font-size: 10px; }
+
+  /* ---------- column key ---------- */
+
+  .key {
+    display: grid;
+    grid-template-columns: 16px 20px minmax(0, 1fr) 92px 76px 96px 180px 44px 26px;
+    align-items: center;
+    gap: 12px;
+    padding: 0 14px 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .key .k-imp { text-align: center; }
+  .key .k-pct { text-align: right; }
+
+  /* ---------- project rows ---------- */
+
+  .list { display: flex; flex-direction: column; gap: 8px; }
+
+  .project {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 3px solid transparent;
+    border-radius: 3px;
+  }
+  .project.critical { border-left-color: var(--imp4); }
+
+  .row {
+    display: grid;
+    grid-template-columns: 16px 20px minmax(0, 1fr) 92px 76px 96px 180px 44px 26px;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    cursor: pointer;
+  }
+
+  .caret {
+    background: none;
+    border: 0;
+    padding: 0;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 11px;
+    line-height: 1;
+    transition: transform 0.15s ease;
+  }
+  .project.open .caret { transform: rotate(90deg); color: var(--ink); }
+
+  input.name {
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    padding: 2px 0;
+    width: 100%;
+    min-width: 0;
+    letter-spacing: -0.01em;
+  }
+  input.name:hover { border-bottom-color: var(--line); }
+  input.name:focus { outline: none; border-bottom-color: var(--fill); }
+  .row > input.name { font-weight: 600; }
+
+  /* ---------- importance pips ---------- */
+
+  .pips {
+    display: flex;
+    gap: 3px;
+    justify-content: center;
+    background: none;
+    border: 0;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  .pips.auto { cursor: default; }
+  .pips.auto .pip { border-style: dashed; }
+  .pips.lv1 { color: var(--imp1); }
+  .pips.lv2 { color: var(--imp2); }
+  .pips.lv3 { color: var(--imp3); }
+  .pips.lv4 { color: var(--imp4); }
+
+  .pip {
+    width: 8px;
+    height: 14px;
+    border: 1px solid currentColor;
+    border-radius: 1px;
+    opacity: 0.28;
+  }
+  .pip.on { background: currentColor; opacity: 1; }
+
+  /* ---------- completion bars ---------- */
+
+  /* Bars are tinted by importance: --bar is set per project and per task. */
+  .lv1 { --bar: var(--imp1); }
+  .lv2 { --bar: var(--imp2); }
+  .lv3 { --bar: var(--imp3); }
+  .lv4 { --bar: var(--imp4); }
+
+  .bar { display: flex; gap: 2px; height: 14px; }
+  .seg { flex: 1; background: var(--track); border-radius: 1px; overflow: hidden; }
+  .seg > i {
+    display: block;
+    height: 100%;
+    background: var(--bar, var(--fill));
+    transition: width 0.12s linear;
+  }
+
+  .pct {
+    font-family: var(--mono);
+    font-size: 12px;
+    text-align: right;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .pct.zero { color: var(--muted); }
+
+  .del {
+    position: relative;
+    justify-self: center;
+    background: none;
+    border: 0;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: block;
+    color: var(--muted);
+    cursor: pointer;
+    opacity: 0;
+    border-radius: 50%;
+  }
+  .del:hover { color: var(--imp4); background: var(--track); }
+
+  /* Two rotated bars rather than a text glyph: the "×" character sits above
+     the em-box centre in most faces, so it never lines up with the circle. */
+  .del > .glyph {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 11px;
+    height: 11px;
+    transform: translate(-50%, -50%);
+  }
+  .del > .glyph::before,
+  .del > .glyph::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1.5px;
+    margin-top: -0.75px;
+    background: currentColor;
+    border-radius: 1px;
+  }
+  .del > .glyph::before { transform: rotate(45deg); }
+  .del > .glyph::after { transform: rotate(-45deg); }
+
+  .del > .hint {
+    position: absolute;
+    right: calc(100% + 6px);
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    white-space: nowrap;
+    padding: 4px 6px;
+    border-radius: 2px;
+    background: var(--imp4);
+    color: #fff;
+    pointer-events: none;
+  }
+  .del.armed > .hint { display: block; }
+  .project:hover .del, .del:focus, .del.armed { opacity: 1; }
+  .del.armed { color: #fff; background: var(--imp4); }
+
+  /* ---------- task panel ---------- */
+
+  .panel {
+    display: none;
+    padding: 4px 14px 14px 48px;
+    border-top: 1px solid var(--line);
+  }
+  .project.open .panel { display: block; }
+
+  .task {
+    display: grid;
+    grid-template-columns: 16px minmax(0, 1fr) 92px 76px 96px 180px 44px 26px;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 0;
+  }
+  .task + .task { border-top: 1px dotted var(--line); }
+  .task input.name { font-size: 14px; }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 14px;
+    background: transparent;
+    cursor: ew-resize;
+    margin: 0;
+  }
+  /* Task slider fill sits at 50% opacity; project bars stay solid. */
+  input[type=range] { --bar-soft: color-mix(in srgb, var(--bar, var(--fill)) 50%, transparent); }
+  input[type=range]::-webkit-slider-runnable-track {
+    height: 14px;
+    border-radius: 1px;
+    background: linear-gradient(to right,
+      var(--bar-soft) var(--p, 0%), var(--track) var(--p, 0%));
+  }
+  input[type=range]::-moz-range-track {
+    height: 14px;
+    border-radius: 1px;
+    background: linear-gradient(to right,
+      var(--bar-soft) var(--p, 0%), var(--track) var(--p, 0%));
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 4px;
+    height: 14px;
+    background: var(--ink);
+    border: 0;
+    border-radius: 1px;
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 4px;
+    height: 14px;
+    background: var(--ink);
+    border: 0;
+    border-radius: 1px;
+  }
+
+  /* ---------- done checkbox ---------- */
+
+  .slider-wrap { display: flex; align-items: center; gap: 9px; }
+  .slider-wrap > input[type=range] { flex: 1 1 auto; min-width: 0; }
+
+  .tick {
+    flex: 0 0 auto;
+    width: 14px;
+    height: 14px;
+    padding: 0;
+    border: 1px solid var(--muted);
+    border-radius: 2px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+  }
+  .tick:hover { border-color: var(--ink); }
+  .tick.on { background: var(--bar, var(--fill)); border-color: var(--bar, var(--fill)); }
+  .tick.on::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 1px;
+    width: 3px;
+    height: 7px;
+    border: solid #fff;
+    border-width: 0 1.5px 1.5px 0;
+    transform: rotate(45deg);
+  }
+
+  /* ---------- name cell, note button, collapsed counts ---------- */
+
+  .namecell { display: flex; align-items: center; gap: 9px; min-width: 0; }
+  .namecell > input.name { flex: 1 1 auto; min-width: 0; }
+
+  .notebtn {
+    flex: 0 0 auto;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 2px 6px;
+    cursor: pointer;
+    opacity: 0;
+  }
+  .project:hover .notebtn, .task:hover .notebtn,
+  .notebtn:focus, .notebtn.has, .notebtn.open { opacity: 1; }
+  .notebtn:hover { border-color: var(--ink); color: var(--ink); }
+  .notebtn.has { border-color: var(--muted); color: var(--ink); }
+  .notebtn.open { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+  input.area {
+    flex: 0 0 auto;
+    width: 82px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    padding: 3px 5px;
+    min-width: 0;
+  }
+  input.area::placeholder { color: var(--muted); opacity: 0.45; }
+  input.area { border-color: var(--line); background: var(--paper); }
+  input.area:hover { border-color: var(--muted); }
+  input.area:focus { outline: none; border-color: var(--fill); color: var(--ink); }
+
+  .group { margin-bottom: 30px; }
+
+  .group-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 0 14px 8px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 12px;
+  }
+
+  .gtoggle {
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+    flex: 1 1 auto;
+    min-width: 0;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+  }
+  .gtoggle > .gcaret {
+    font-size: 9px;
+    color: var(--muted);
+    transition: transform 0.15s ease;
+  }
+  .group.shut .gtoggle > .gcaret { transform: rotate(-90deg); }
+  .gtoggle > .gname {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .gtoggle > .gcount {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .gtoggle:hover > .gname { color: var(--fill); }
+
+  .group.shut > .key, .group.shut > .list { display: none; }
+
+  .areapill {
+    flex: 0 0 auto;
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 2px 6px;
+    cursor: pointer;
+    opacity: 0;
+  }
+  .project:hover .areapill, .areapill:focus { opacity: 1; }
+  .areapill:hover { border-color: var(--ink); color: var(--ink); }
+  .areapill.locked { opacity: 1; cursor: default; border-style: dashed; }
+  .areapill.locked:hover { border-color: var(--line); color: var(--muted); }
+
+  .meta {
+    flex: 0 0 auto;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .meta .late-count { color: var(--imp4); }
+
+  .note-row { padding: 2px 0 8px 28px; }
+  .project > .note-row { padding: 0 14px 12px 74px; }
+  .note-row textarea {
+    width: 100%;
+    min-height: 46px;
+    font-family: var(--sans);
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 8px 9px;
+    resize: vertical;
+  }
+  .note-row textarea:focus { outline: none; border-color: var(--fill); }
+  .note-row textarea::placeholder { color: var(--muted); }
+
+  /* ---------- read-only state on completed projects ---------- */
+
+  input[readonly], textarea[readonly] { cursor: default; }
+  input.name[readonly]:hover, input.name[readonly]:focus,
+  input.due[readonly]:hover, input.due[readonly]:focus { border-bottom-color: transparent; }
+  textarea[readonly] { background: var(--card); color: var(--muted); }
+  textarea[readonly]:focus { border-color: var(--line); }
+
+  /* ---------- due date ---------- */
+
+  input.due {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    padding: 2px 0;
+    width: 100%;
+    min-width: 0;
+  }
+  input.due::placeholder { color: var(--muted); opacity: 0.5; }
+  input.due:hover { border-bottom-color: var(--line); }
+  input.due:focus { outline: none; border-bottom-color: var(--fill); }
+  input.due.bad { border-bottom-color: var(--imp4); color: var(--imp4); }
+
+  /* Past due: a wash faint enough to read as a state, not an alarm. */
+  /* Anything past due — the project itself or any of its tasks — tints the
+     whole block. Mixed against --card so the surface stays opaque. */
+  .project.late { background: color-mix(in srgb, var(--imp4) 8%, var(--card)); }
+
+  .left {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .left.today { color: var(--ink); font-weight: 600; }
+  .left.late { color: var(--imp4); }
+  .left.bad { color: var(--imp4); }
+
+  /* ---------- move down ---------- */
+
+  .down {
+    background: none;
+    border: 0;
+    padding: 0;
+    width: 16px;
+    height: 18px;
+    line-height: 1;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    opacity: 0.4;
+    border-radius: 2px;
+  }
+  .down:hover { opacity: 1; color: var(--ink); background: var(--track); }
+  .down[disabled] { opacity: 0.12; cursor: default; }
+  .down[disabled]:hover { background: none; color: var(--muted); }
+  .project:hover > .row > .down, .task:hover > .down { opacity: 0.7; }
+  .project:hover > .row > .down[disabled], .task:hover > .down[disabled] { opacity: 0.12; }
+
+  /* ---------- inputs for adding ---------- */
+
+  .adder {
+    width: 100%;
+    font: inherit;
+    color: var(--ink);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 8px 0;
+  }
+  .adder::placeholder { color: var(--muted); }
+  .adder:focus { outline: none; border-bottom-color: var(--fill); }
+
+  .task-adder { font-size: 14px; padding: 8px 0 4px; margin-top: 4px; }
+  .project-adder { margin-top: 14px; padding-left: 14px; }
+
+  .empty {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 4px 0 2px;
+  }
+
+  .board-empty {
+    background: var(--card);
+    border: 1px dashed var(--line);
+    border-radius: 3px;
+    padding: 28px 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .done-section { margin-top: 34px; }
+
+  .section-head {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 10px;
+    padding-left: 14px;
+  }
+
+  /* Finished projects fade back, and come forward again on hover so they
+     stay usable without competing with live work. */
+  .project.done {
+    opacity: 0.35;
+    transition: opacity 0.15s ease;
+  }
+  .project.done:hover, .project.done:focus-within { opacity: 1; }
+
+  .done-empty {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+    padding: 14px;
+    border: 1px dashed var(--line);
+    border-radius: 3px;
+  }
+
+  .backup {
+    margin-top: 32px;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+  }
+
+  .backup > summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 8px 14px;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+  .backup > summary::-webkit-details-marker { display: none; }
+  .backup > summary::before {
+    content: '+';
+    display: inline-block;
+    width: 9px;
+    text-align: center;
+    color: var(--muted);
+  }
+  .backup[open] > summary::before { content: '\2212'; color: inherit; }
+  .backup > summary:hover { border-color: var(--ink); }
+  .backup[open] > summary {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+
+  .backup-body { padding-top: 12px; }
+
+  .backup-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 7px 12px;
+    cursor: pointer;
+  }
+  .btn:hover { border-color: var(--ink); }
+  #exportBtn {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+  #exportBtn:hover { background: #000; border-color: #000; }
+  .btn.danger { color: var(--imp4); }
+  .btn.danger:hover { border-color: var(--imp4); }
+  .btn.armed { background: var(--imp4); border-color: var(--imp4); color: #fff; }
+
+  .status {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .status.bad { color: var(--imp4); }
+
+  #backupBox {
+    width: 100%;
+    height: 96px;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--muted);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 10px;
+    resize: vertical;
+  }
+  #backupBox:focus { outline: none; border-color: var(--fill); color: var(--ink); }
+
+  .note {
+    margin-top: 26px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .warn { color: #B03024; }
+
+  :focus-visible { outline: 2px solid var(--fill); outline-offset: 2px; }
+
+  @media (max-width: 700px) {
+    .key { display: none; }
+    .row {
+      grid-template-columns: 16px 20px minmax(0, 1fr) 56px 44px 26px;
+      row-gap: 8px;
+    }
+    .row > .down        { grid-area: 1 / 1; }
+    .row > .caret       { grid-area: 1 / 2; }
+    .row > .namecell    { grid-area: 1 / 3; }
+    .row > .pips        { grid-area: 1 / 4; }
+    .row > .pct         { grid-area: 1 / 5; }
+    .row > .del         { grid-area: 1 / 6; }
+    .row > input.due    { grid-area: 2 / 3 / auto / 5; }
+    .row > .left        { grid-area: 2 / 5 / auto / -1; }
+    .row > .bar,
+    .row > .slider-wrap { grid-area: 3 / 3 / auto / -1; }
+
+    .task {
+      grid-template-columns: 16px minmax(0, 1fr) 56px 44px 26px;
+      row-gap: 6px;
+      padding: 10px 0;
+    }
+    .task > .down        { grid-area: 1 / 1; }
+    .task > .namecell    { grid-area: 1 / 2; }
+    .task > .pips        { grid-area: 1 / 3; }
+    .task > .pct         { grid-area: 1 / 4; }
+    .task > .del         { grid-area: 1 / 5; }
+    .task > input.due    { grid-area: 2 / 2 / auto / 4; }
+    .task > .left        { grid-area: 2 / 4 / auto / -1; }
+    .task > .slider-wrap { grid-area: 3 / 2 / auto / -1; }
+
+    .panel { padding-left: 22px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1><input id="title" value="Projects" aria-label="Board title" autocomplete="off" spellcheck="false"></h1>
+    <span class="logo" aria-hidden="true"><svg viewBox="0 0 57 33" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" overflow="hidden"><g transform="translate(-575 -327)"><path d="M0 0 9.4 27.8" stroke="#0027A4" stroke-width="3.33333" stroke-linecap="round" stroke-miterlimit="8" fill="none" fill-rule="evenodd" transform="matrix(-1 0 0 1 591.9 329.5)"/><path d="M0 0 9.4 27.8" stroke="#0027A4" stroke-width="3.33333" stroke-linecap="round" stroke-miterlimit="8" fill="none" fill-rule="evenodd" transform="matrix(-1 0 0 1 610.9 329.5)"/><path d="M610.5 329.5 619.9 357.3" stroke="#0027A4" stroke-width="3.33333" stroke-linecap="round" stroke-miterlimit="8" fill="none" fill-rule="evenodd"/><path d="M0 0 9.4 27.8" stroke="#0027A4" stroke-width="3.33333" stroke-linecap="round" stroke-miterlimit="8" fill="none" fill-rule="evenodd" transform="matrix(-1 0 0 1 629.9 329.5)"/><path d="M577.5 343.5 582.2 357.4" stroke="#0027A4" stroke-width="3.33333" stroke-linecap="round" stroke-miterlimit="8" fill="none" fill-rule="evenodd"/><path d="M596.5 343.5 601.2 357.4" stroke="#0027A4" stroke-width="3.33333" stroke-linecap="round" stroke-miterlimit="8" fill="none" fill-rule="evenodd"/><path d="M0 0 26.2999 0.000104987" stroke="#0027A4" stroke-width="3.33333" stroke-linecap="round" stroke-miterlimit="8" fill="none" fill-rule="evenodd" transform="matrix(-1 0 0 1 603.8 329.5)"/></g></svg></span>
+  </header>
+  <p class="subhead" id="tally"></p>
+
+  <input class="filter" id="filter" type="search" placeholder="Filter by project or task name" autocomplete="off" aria-label="Filter">
+
+  <datalist id="areaList"></datalist>
+
+  <div class="list" id="list"></div>
+
+  <input class="adder project-adder" id="newProject" placeholder="Add a project, press Enter" autocomplete="off">
+
+  <section class="done-section">
+    <div class="section-bar">
+      <h2 class="section-head">Completed</h2>
+      <button type="button" class="btn small" id="clearDone" hidden>Clear completed</button>
+    </div>
+    <div class="list" id="doneList"></div>
+  </section>
+
+  <details class="backup">
+    <summary>Backup</summary>
+    <div class="backup-body">
+      <div class="backup-actions">
+        <button type="button" class="btn" id="exportBtn">Export</button>
+        <button type="button" class="btn" id="copyBtn">Copy text</button>
+        <button type="button" class="btn" id="importBtn">Import file</button>
+        <input type="file" id="importFile" accept=".json,application/json" hidden>
+        <button type="button" class="btn danger" id="restoreBtn">Restore</button>
+        <span class="status" id="backupStatus"></span>
+      </div>
+      <textarea id="backupBox" spellcheck="false"
+        placeholder="Export drops your backup text here. To restore, paste a backup in and press Restore."></textarea>
+    </div>
+  </details>
+
+  <p class="note" id="note">
+    Completion and importance are averaged from a project's tasks. A project with no
+    tasks yet sets both by hand. Click a row to open it.<br>
+    Click the blocks to set importance: 1 black &middot; 2 green &middot; 3 blue &middot; 4 red.<br>
+    The arrow on the left moves a row down one place. Note adds a comment to any row.<br>
+    Due dates are typed in, as YYYY-MM-DD. The next column counts down to them.<br>
+    Everything saves as you type.
+  </p>
+</div>
+
+<script>
+(function () {
+  var KEY = 'projects:v1';
+  var state = { projects: [], sort: 'attention', title: 'Projects', groups: {}, sorts: {} };
+  var saveTimer = null;
+  var storageOK = true;
+  var refocus = null;
+  var filterText = '';
+  var editingArea = null;
+
+  var list = document.getElementById('list');
+  var doneList = document.getElementById('doneList');
+  var note = document.getElementById('note');
+  var tally = document.getElementById('tally');
+
+  /* ---------- storage ---------- */
+  /* Inside Claude we use the artifact storage API. Opened as a local file it
+     isn't there, so we fall back to the browser's own storage for the page. */
+
+  var store = (function () {
+    if (window.storage && typeof window.storage.get === 'function') {
+      return {
+        kind: 'claude',
+        get: function () {
+          return Promise.resolve(window.storage.get(KEY, false)).then(function (r) {
+            return r && r.value ? r.value : null;
+          });
+        },
+        set: function (v) { return Promise.resolve(window.storage.set(KEY, v, false)); }
+      };
+    }
+    try {
+      window.localStorage.setItem(KEY + ':probe', '1');
+      window.localStorage.removeItem(KEY + ':probe');
+      return {
+        kind: 'local',
+        get: function () { return Promise.resolve(window.localStorage.getItem(KEY)); },
+        set: function (v) {
+          window.localStorage.setItem(KEY, v);
+          return Promise.resolve();
+        }
+      };
+    } catch (e) { /* blocked */ }
+    return {
+      kind: 'none',
+      get: function () { return Promise.resolve(null); },
+      set: function () { return Promise.reject(new Error('no storage')); }
+    };
+  })();
+
+  var SCHEMA = 1;
+
+  function serialize() {
+    return JSON.stringify({ v: SCHEMA, title: state.title, projects: state.projects, sort: state.sort, groups: state.groups, sorts: state.sorts });
+  }
+
+  function writeNow() {
+    clearTimeout(saveTimer);
+    saveTimer = null;
+    if (store.kind === 'none') { flagStorage(); return; }
+    try {
+      var p = store.set(serialize());
+      if (p && p.catch) p.catch(flagStorage);
+    } catch (e) { flagStorage(); }
+  }
+
+  function save() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(writeNow, 250);
+  }
+
+  function flagStorage() {
+    if (!storageOK) return;
+    storageOK = false;
+    note.innerHTML = '<span class="warn">This browser is blocking storage for local files, so nothing is being saved. ' +
+      'Use Export below before you close the tab.</span>';
+  }
+
+  window.addEventListener('beforeunload', function () {
+    if (saveTimer) writeNow();
+  });
+
+  async function load() {
+    if (store.kind === 'none') { flagStorage(); return; }
+    try {
+      var raw = await store.get();
+      if (raw) adopt(JSON.parse(raw));
+    } catch (e) { /* nothing stored yet */ }
+  }
+
+  function adopt(d) {
+    if (!d || !Array.isArray(d.projects)) throw new Error('bad shape');
+    state.projects = d.projects.map(function (p) {
+      return {
+        id: p.id || uid(),
+        name: String(p.name || ''),
+        importance: Math.min(4, Math.max(1, Number(p.importance) || 1)),
+        due: typeof p.due === 'string' ? p.due : '',
+        done: Math.min(100, Math.max(0, Number(p.done) || 0)),
+        area: typeof p.area === 'string' ? p.area : '',
+        note: typeof p.note === 'string' ? p.note : '',
+        noteOpen: !!p.noteOpen,
+        open: !!p.open,
+        tasks: (Array.isArray(p.tasks) ? p.tasks : []).map(function (t) {
+          return {
+            id: t.id || uid(),
+            name: String(t.name || ''),
+            importance: Math.min(4, Math.max(1, Number(t.importance) || 1)),
+            due: typeof t.due === 'string' ? t.due : '',
+            note: typeof t.note === 'string' ? t.note : '',
+            noteOpen: !!t.noteOpen,
+            done: Math.min(100, Math.max(0, Number(t.done) || 0))
+          };
+        })
+      };
+    });
+    if (d.sort) state.sort = d.sort;
+    if (typeof d.title === 'string') state.title = d.title;
+    state.groups = (d.groups && typeof d.groups === 'object') ? d.groups : {};
+    state.sorts = (d.sorts && typeof d.sorts === 'object') ? d.sorts : {};
+  }
+
+  /* ---------- helpers ---------- */
+
+  function uid() { return Math.random().toString(36).slice(2, 9); }
+
+  function pct(p) {
+    if (!p.tasks.length) return Math.min(100, Math.max(0, Number(p.done) || 0));
+    var t = 0;
+    for (var i = 0; i < p.tasks.length; i++) t += p.tasks[i].done;
+    return Math.round(t / p.tasks.length);
+  }
+
+  /* Importance is averaged from the tasks whenever there are any; only an
+     empty project keeps a hand-set level. */
+  function impOf(p) {
+    if (!p.tasks.length) return Math.min(4, Math.max(1, Number(p.importance) || 1));
+    var t = 0;
+    for (var i = 0; i < p.tasks.length; i++) t += p.tasks[i].importance;
+    return Math.min(4, Math.max(1, Math.ceil(t / p.tasks.length)));
+  }
+
+  var UNGROUPED = 'Ungrouped';
+  var LOCKED_HINT = 'Locked while this project is complete';
+
+  function areaOf(p) {
+    var a = (p.area || '').trim();
+    return a || UNGROUPED;
+  }
+
+  /* Group names in alphabetical order, with Ungrouped always last. */
+  function areaNames(projects) {
+    var seen = {}, names = [];
+    projects.forEach(function (p) {
+      var a = areaOf(p);
+      if (!seen[a]) { seen[a] = 1; names.push(a); }
+    });
+    names.sort(function (x, y) {
+      if (x === UNGROUPED) return 1;
+      if (y === UNGROUPED) return -1;
+      return x.toLowerCase().localeCompare(y.toLowerCase());
+    });
+    return names;
+  }
+
+  function matches(text) {
+    return (text || '').toLowerCase().indexOf(filterText) !== -1;
+  }
+
+  /* When only tasks match, the project renders with just those tasks. */
+  function visibleTasks(p) {
+    if (!filterText || matches(p.name) || matches(p.note)) return p.tasks;
+    return p.tasks.filter(function (t) { return matches(t.name) || matches(t.note); });
+  }
+
+  function projectMatches(p) {
+    if (!filterText) return true;
+    return matches(p.name) || matches(p.note) || matches(p.area) || visibleTasks(p).length > 0;
+  }
+
+  function find(id) {
+    for (var i = 0; i < state.projects.length; i++) if (state.projects[i].id === id) return state.projects[i];
+    return null;
+  }
+
+  function sortOf(area) {
+    return state.sorts[area] || state.sort || 'attention';
+  }
+
+  function sortedBy(arr, s) {
+    var out = arr.slice();
+    if (s === 'manual') return out;
+    out.sort(function (a, b) {
+      if (s === 'name') return a.name.localeCompare(b.name);
+      if (s === 'completion') return pct(a) - pct(b) || impOf(b) - impOf(a);
+      if (s === 'importance') return impOf(b) - impOf(a) || pct(a) - pct(b);
+      if (s === 'due') {
+        var da = soonestDue(a), db = soonestDue(b);
+        if (da === null && db === null) return impOf(b) - impOf(a);
+        if (da === null) return 1;
+        if (db === null) return -1;
+        return da - db || impOf(b) - impOf(a);
+      }
+      /* Needs attention: importance plus deadline pressure, least-done breaks ties. */
+      return (impOf(b) + urgencyOf(b)) - (impOf(a) + urgencyOf(a)) || (pct(a) - pct(b));
+    });
+    return out;
+  }
+
+  function el(tag, cls, txt) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (txt != null) n.textContent = txt;
+    return n;
+  }
+
+  function pips(level, onClick, label, why) {
+    var b = el('button', 'pips lv' + level + (onClick ? '' : ' auto'));
+    b.type = 'button';
+    b.title = label + ' importance: ' + level + ' of 4' +
+      (onClick ? '' : (why || ', averaged from its tasks'));
+    b.setAttribute('aria-label', b.title);
+    for (var i = 1; i <= 4; i++) b.appendChild(el('span', 'pip' + (i <= level ? ' on' : '')));
+    b.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (onClick) onClick();
+    });
+    if (!onClick) b.disabled = true;
+    return b;
+  }
+
+  function nameField(value, placeholder, onChange, locked) {
+    var i = el('input', 'name');
+    i.value = value;
+    i.placeholder = placeholder;
+    i.autocomplete = 'off';
+    if (locked) { i.readOnly = true; i.title = LOCKED_HINT; }
+    i.addEventListener('click', function (e) { e.stopPropagation(); });
+    i.addEventListener('input', function () {
+      if (locked) { i.value = value; return; }
+      onChange(i.value);
+    });
+    i.addEventListener('keydown', function (e) { if (e.key === 'Enter') i.blur(); });
+    return i;
+  }
+
+  function deleteButton(label, onDelete) {
+    var b = el('button', 'del');
+    b.type = 'button';
+    b.title = 'Remove ' + label;
+    b.setAttribute('aria-label', 'Remove ' + label);
+
+    var hint = el('span', 'hint', 'remove?');
+    b.appendChild(hint);
+    b.appendChild(el('span', 'glyph'));
+
+    var armed = false, t;
+
+    function disarm() {
+      clearTimeout(t);
+      armed = false;
+      b.classList.remove('armed');
+      b.title = 'Remove ' + label;
+    }
+
+    b.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (armed) { disarm(); onDelete(); return; }
+      armed = true;
+      b.classList.add('armed');
+      b.title = 'Click again to remove ' + label;
+      t = setTimeout(disarm, 3000);
+    });
+    b.addEventListener('blur', disarm);
+    b.addEventListener('mouseleave', function () { if (armed) disarm(); });
+
+    return b;
+  }
+
+  function tickBox(label, isDone, onToggle) {
+    var b = el('button', 'tick' + (isDone ? ' on' : ''));
+    b.type = 'button';
+    b.title = isDone ? 'Mark ' + label + ' unfinished' : 'Mark ' + label + ' done';
+    b.setAttribute('aria-label', b.title);
+    b.setAttribute('aria-pressed', String(!!isDone));
+    b.addEventListener('click', function (e) { e.stopPropagation(); onToggle(); });
+    return b;
+  }
+
+  function noteButton(obj, label, onToggle) {
+    var b = el('button', 'notebtn' + (obj.note ? ' has' : '') + (obj.noteOpen ? ' open' : ''), 'note');
+    b.type = 'button';
+    b.title = (obj.noteOpen ? 'Hide note for ' : obj.note ? 'Edit note for ' : 'Add a note to ') + label;
+    b.setAttribute('aria-label', b.title);
+    b.setAttribute('aria-expanded', String(!!obj.noteOpen));
+    b.addEventListener('click', function (e) { e.stopPropagation(); onToggle(); });
+    return b;
+  }
+
+  function noteRow(obj, label, locked) {
+    var row = el('div', 'note-row');
+    var ta = document.createElement('textarea');
+    ta.value = obj.note || '';
+    ta.placeholder = locked ? 'No note' : 'Note for this ' + label;
+    if (locked) { ta.readOnly = true; ta.title = LOCKED_HINT; }
+    ta.setAttribute('aria-label', 'Note for ' + label);
+    ta.addEventListener('click', function (e) { e.stopPropagation(); });
+    ta.addEventListener('input', function () {
+      if (locked) { ta.value = obj.note || ''; return; }
+      obj.note = ta.value;
+      save();
+    });
+    row.appendChild(ta);
+    return row;
+  }
+
+  function downButton(label, isLast, onMove, whyDisabled) {
+    var b = el('button', 'down', '\u2193');
+    b.type = 'button';
+    b.disabled = isLast;
+    b.title = isLast ? (whyDisabled || label + ' is already last') : 'Move ' + label + ' down';
+    b.setAttribute('aria-label', b.title);
+    b.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (!isLast) onMove();
+    });
+    return b;
+  }
+
+  /* Freeze a group's current on-screen order into the master array so that
+     manual moves inside it have something to move within. */
+  function pinGroup(area) {
+    if (sortOf(area) === 'manual') return;
+    var slots = [], members = [];
+    state.projects.forEach(function (p, i) {
+      if (areaOf(p) === area && pct(p) < 100) { slots.push(i); members.push(p); }
+    });
+    var ordered = sortedBy(members, sortOf(area));
+    slots.forEach(function (slot, k) { state.projects[slot] = ordered[k]; });
+    state.sorts[area] = 'manual';
+  }
+
+  function swapProjects(idA, idB) {
+    var ia = -1, ib = -1;
+    for (var i = 0; i < state.projects.length; i++) {
+      if (state.projects[i].id === idA) ia = i;
+      if (state.projects[i].id === idB) ib = i;
+    }
+    if (ia < 0 || ib < 0) return false;
+    var tmp = state.projects[ia];
+    state.projects[ia] = state.projects[ib];
+    state.projects[ib] = tmp;
+    return true;
+  }
+
+  function swapDown(arr, id) {
+    var i = -1;
+    for (var k = 0; k < arr.length; k++) if (arr[k].id === id) i = k;
+    if (i < 0 || i >= arr.length - 1) return false;
+    var moved = arr.splice(i, 1)[0];
+    arr.splice(i + 1, 0, moved);
+    return true;
+  }
+
+  /* ---------- due dates ---------- */
+
+  function daysUntil(due) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(due || '')) return null;
+    var y = +due.slice(0, 4), m = +due.slice(5, 7), d = +due.slice(8, 10);
+    var target = new Date(y, m - 1, d);
+    if (target.getFullYear() !== y || target.getMonth() !== m - 1 || target.getDate() !== d) return null;
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    return Math.round((target - today) / 86400000);
+  }
+
+  function isLate(due) {
+    var n = daysUntil(due);
+    return n !== null && n < 0;
+  }
+
+  /* How pressing a date is: 0 none or far off, 4 already late. */
+  function urgency(due) {
+    var n = daysUntil(due);
+    if (n === null) return 0;
+    if (n < 0) return 4;
+    if (n <= 1) return 3;
+    if (n <= 3) return 2;
+    if (n <= 7) return 1;
+    return 0;
+  }
+
+  /* A project is as urgent as its most pressing date, its own or a task's. */
+  function urgencyOf(p) {
+    var u = urgency(p.due);
+    for (var i = 0; i < p.tasks.length; i++) u = Math.max(u, urgency(p.tasks[i].due));
+    return u;
+  }
+
+  /* Days to the earliest date anywhere in the project, null if none. */
+  function soonestDue(p) {
+    var best = null;
+    function consider(d) {
+      var n = daysUntil(d);
+      if (n !== null && (best === null || n < best)) best = n;
+    }
+    consider(p.due);
+    for (var i = 0; i < p.tasks.length; i++) consider(p.tasks[i].due);
+    return best;
+  }
+
+  function dueLabel(n) {
+    if (n === 0) return 'today';
+    if (n === 1) return '1 day';
+    if (n > 1) return n + ' days';
+    if (n === -1) return '1 day late';
+    return (-n) + ' days late';
+  }
+
+  function paintLeft(cell, due) {
+    cell.className = 'left';
+    if (!due) { cell.textContent = ''; return; }
+    var n = daysUntil(due);
+    if (n === null) { cell.textContent = '?'; cell.classList.add('bad'); return; }
+    cell.textContent = dueLabel(n);
+    if (n < 0) cell.classList.add('late');
+    else if (n === 0) cell.classList.add('today');
+  }
+
+  function dueCells(obj, label, onChange, locked) {
+    var input = el('input', 'due');
+    input.value = obj.due || '';
+    input.placeholder = 'YYYY-MM-DD';
+    input.maxLength = 10;
+    input.autocomplete = 'off';
+    input.spellcheck = false;
+    input.title = locked ? LOCKED_HINT : 'Due date, typed as YYYY-MM-DD';
+    input.setAttribute('aria-label', 'Due date for ' + label);
+    if (locked) { input.readOnly = true; input.placeholder = ''; }
+
+    var cell = el('div', 'left');
+    paintLeft(cell, obj.due);
+
+    function refresh() {
+      var n = daysUntil(obj.due);
+      input.classList.toggle('bad', !!obj.due && n === null);
+      paintLeft(cell, obj.due);
+      if (onChange) onChange();
+    }
+    refresh();
+
+    input.addEventListener('click', function (e) { e.stopPropagation(); });
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') input.blur(); });
+    input.addEventListener('input', function () {
+      if (locked) { input.value = obj.due || ''; return; }
+      obj.due = input.value.trim();
+      refresh();
+      save();
+    });
+
+    return [input, cell];
+  }
+
+  /* ---------- render ---------- */
+
+  function render() {
+    list.innerHTML = '';
+    doneList.innerHTML = '';
+    syncTitle();
+    updateTally();
+    syncAreaList();
+
+    var live = [], finished = [];
+    state.projects.filter(projectMatches).forEach(function (p) {
+      (pct(p) === 100 ? finished : live).push(p);
+    });
+
+    document.getElementById('clearDone').hidden = !state.projects.some(function (p) {
+      return pct(p) === 100;
+    });
+
+    if (!live.length) {
+      list.appendChild(el('div', 'board-empty',
+        filterText ? 'Nothing matches that filter.'
+          : state.projects.length ? 'Nothing in progress. Everything below is done.'
+          : 'No projects yet. Add one below to start tracking it.'));
+    } else {
+      renderGrouped(live);
+    }
+
+    if (!finished.length) {
+      doneList.appendChild(el('div', 'done-empty', 'Completed projects will go here.'));
+    } else {
+      sortedBy(finished, 'name').forEach(function (p) {
+        doneList.appendChild(renderProject(p, null));
+      });
+    }
+
+    if (refocus) {
+      var target = document.querySelector(refocus);
+      refocus = null;
+      if (target && !target.disabled) target.focus();
+    }
+  }
+
+  /* Feeds the autocomplete on every area field. */
+  function syncAreaList() {
+    var dl = document.getElementById('areaList');
+    dl.innerHTML = '';
+    var seen = {};
+    state.projects.forEach(function (p) {
+      var a = (p.area || '').trim();
+      if (!a || seen[a]) return;
+      seen[a] = 1;
+      var o = document.createElement('option');
+      o.value = a;
+      dl.appendChild(o);
+    });
+  }
+
+  function updateTally() {
+    var n = state.projects.length;
+    if (!n) { tally.textContent = ''; return; }
+    var done = 0, hot = 0;
+    state.projects.forEach(function (p) {
+      if (pct(p) === 100) done++;
+      if (impOf(p) === 4 && pct(p) < 100) hot++;
+    });
+    tally.textContent = n + (n === 1 ? ' project' : ' projects') + ' \u00B7 ' + done + ' completed \u00B7 ' + hot + ' at level 4 still open';
+  }
+
+  var KEY_LABELS = ['', '', 'Project', 'Due date', 'Left', 'Importance', 'Completion', '%', ''];
+
+  function keyRow() {
+    var k = el('div', 'key');
+    KEY_LABELS.forEach(function (label, i) {
+      var span = el('span', i === 5 ? 'k-imp' : i === 7 ? 'k-pct' : '', label);
+      k.appendChild(span);
+    });
+    return k;
+  }
+
+  function sortMenu(area) {
+    var wrap = el('label', 'sorter');
+    wrap.appendChild(document.createTextNode('Sort'));
+    var sel = document.createElement('select');
+    [['manual', 'My order'], ['attention', 'Needs attention'], ['due', 'Due date'],
+     ['completion', 'Least done'], ['importance', 'Importance'], ['name', 'Name']]
+      .forEach(function (o) {
+        var opt = document.createElement('option');
+        opt.value = o[0];
+        opt.textContent = o[1];
+        sel.appendChild(opt);
+      });
+    sel.value = sortOf(area);
+    sel.setAttribute('aria-label', 'Sort ' + area);
+    sel.addEventListener('click', function (e) { e.stopPropagation(); });
+    sel.addEventListener('change', function () {
+      if (sel.value === 'manual') pinGroup(area);
+      else state.sorts[area] = sel.value;
+      writeNow();
+      render();
+    });
+    wrap.appendChild(sel);
+    return wrap;
+  }
+
+  /* One block per area, each with its own heading, column titles and sort. */
+  function renderGrouped(live) {
+    areaNames(live).forEach(function (name) {
+      var members = sortedBy(live.filter(function (p) { return areaOf(p) === name; }), sortOf(name));
+      if (!members.length) return;
+
+      var shut = !!state.groups[name];
+      var block = el('div', 'group' + (shut ? ' shut' : ''));
+      block.dataset.area = name;
+
+      var head = el('div', 'group-head');
+
+      var toggle = el('button', 'gtoggle');
+      toggle.type = 'button';
+      toggle.setAttribute('aria-expanded', String(!shut));
+      toggle.title = (shut ? 'Show ' : 'Hide ') + name;
+      toggle.appendChild(el('span', 'gcaret', '\u25BC'));
+      toggle.appendChild(el('span', 'gname', name));
+      toggle.appendChild(el('span', 'gcount',
+        members.length + (members.length === 1 ? ' project' : ' projects')));
+      toggle.addEventListener('click', function () {
+        if (state.groups[name]) delete state.groups[name];
+        else state.groups[name] = true;
+        writeNow();
+        render();
+      });
+      head.appendChild(toggle);
+      head.appendChild(sortMenu(name));
+      block.appendChild(head);
+
+      block.appendChild(keyRow());
+
+      var inner = el('div', 'list');
+      members.forEach(function (p, i) {
+        inner.appendChild(renderProject(p, i + 1 < members.length ? members[i + 1].id : null));
+      });
+      block.appendChild(inner);
+
+      list.appendChild(block);
+    });
+  }
+
+  function renderProject(p, nextId) {
+    var imp = impOf(p);
+
+    /* Only reshuffle on release, so a card never jumps mid-drag. */
+    function reflowIfFinished() {
+      if ((pct(p) === 100) !== wrap.classList.contains('done')) render();
+    }
+
+    var finished = pct(p) === 100;
+    var wrap = el('div', 'project lv' + imp + (p.open ? ' open' : '') +
+      (imp === 4 ? ' critical' : '') + (finished ? ' done' : ''));
+    wrap.dataset.id = p.id;
+
+    var row = el('div', 'row');
+
+    row.appendChild(downButton('this project', !nextId, function () {
+      pinGroup(areaOf(p));
+      if (!swapProjects(p.id, nextId)) return;
+      refocus = '.project[data-id="' + p.id + '"] > .row > .down';
+      writeNow();
+      render();
+    }));
+
+    var caret = el('button', 'caret', '\u25B6');
+    caret.type = 'button';
+    caret.setAttribute('aria-expanded', String(!!p.open));
+    caret.title = 'Show tasks';
+    row.appendChild(caret);
+
+    var namecell = el('div', 'namecell');
+
+    /* A finished project sits in the Completed section, outside the groups,
+       so letting its area change there has nothing to act on. */
+    if (finished && editingArea === p.id) editingArea = null;
+
+    if (!finished && (!p.area || editingArea === p.id)) {
+      var areaField = el('input', 'area');
+      areaField.value = p.area || '';
+      areaField.placeholder = 'area';
+      areaField.autocomplete = 'off';
+      areaField.spellcheck = false;
+      areaField.title = 'Give this project an area, then press Enter';
+      areaField.setAttribute('aria-label', 'Area for ' + (p.name || 'project'));
+      areaField.setAttribute('list', 'areaList');
+      areaField.addEventListener('click', function (e) { e.stopPropagation(); });
+      areaField.addEventListener('input', function () { p.area = areaField.value; save(); });
+      function commitArea() {
+        p.area = areaField.value.trim();
+        editingArea = null;
+        writeNow();
+        render();
+      }
+      areaField.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') commitArea();
+        if (e.key === 'Escape') { editingArea = null; render(); }
+      });
+      /* Regrouping mid-keystroke would steal focus, so wait for the field to
+         be left before the project changes group. */
+      areaField.addEventListener('blur', commitArea);
+      /* While editing, the field leads and the name steps aside for it. */
+      namecell.appendChild(areaField);
+    }
+
+    namecell.appendChild(nameField(p.name, 'Untitled project', function (v) { p.name = v; save(); }, finished));
+
+    if (p.area && (finished || editingArea !== p.id)) {
+      /* Settled: the pill sits after the name so the name stays flush left
+         rather than being indented by a control that is usually invisible. */
+      var pill = el('button', 'areapill' + (finished ? ' locked' : ''), p.area);
+      pill.type = 'button';
+      if (finished) {
+        pill.disabled = true;
+        pill.title = 'Area is fixed while this project is complete';
+        pill.setAttribute('aria-label', 'Area: ' + p.area + ', fixed while complete');
+      } else {
+        pill.title = 'Change the area of this project';
+        pill.setAttribute('aria-label', 'Area: ' + p.area + '. Click to change.');
+        pill.addEventListener('click', function (e) {
+          e.stopPropagation();
+          editingArea = p.id;
+          refocus = '.project[data-id="' + p.id + '"] input.area';
+          render();
+        });
+      }
+      namecell.appendChild(pill);
+    }
+    namecell.appendChild(noteButton(p, 'this project', function () {
+      p.noteOpen = !p.noteOpen;
+      save(); render();
+    }));
+    if (!p.open && p.tasks.length) {
+      var lateCount = 0;
+      for (var li = 0; li < p.tasks.length; li++) if (isLate(p.tasks[li].due)) lateCount++;
+      var meta = el('span', 'meta');
+      meta.appendChild(document.createTextNode(
+        p.tasks.length + (p.tasks.length === 1 ? ' task' : ' tasks')));
+      if (lateCount) {
+        meta.appendChild(document.createTextNode(' \u00B7 '));
+        meta.appendChild(el('span', 'late-count', lateCount + ' late'));
+      }
+      namecell.appendChild(meta);
+    }
+    row.appendChild(namecell);
+
+    function syncLate() {
+      var late = isLate(p.due);
+      for (var i = 0; i < p.tasks.length && !late; i++) late = isLate(p.tasks[i].due);
+      wrap.classList.toggle('late', late);
+    }
+
+    var pd = dueCells(p, 'this project', syncLate, finished);
+    row.appendChild(pd[0]);
+    row.appendChild(pd[1]);
+
+    if (p.tasks.length || finished) {
+      row.appendChild(pips(imp, null, 'Project',
+        finished ? ', ' + LOCKED_HINT.toLowerCase() : null));
+    } else {
+      row.appendChild(pips(imp, function () {
+        p.importance = p.importance % 4 + 1;
+        save(); render();
+      }, 'Project'));
+    }
+
+    if (!p.tasks.length) {
+      /* Nothing to roll up from, so the project behaves like a single task. */
+      var psw = el('div', 'slider-wrap');
+      var prange = document.createElement('input');
+      prange.type = 'range';
+      prange.min = 0; prange.max = 100; prange.step = 5;
+      prange.value = pct(p);
+      prange.title = 'Completion';
+      prange.style.setProperty('--p', pct(p) + '%');
+      prange.setAttribute('aria-label', 'Completion for ' + (p.name || 'project'));
+      prange.addEventListener('click', function (e) { e.stopPropagation(); });
+      prange.addEventListener('input', function () {
+        p.done = Number(prange.value);
+        prange.style.setProperty('--p', p.done + '%');
+        pc.textContent = p.done + '%';
+        pc.classList.toggle('zero', p.done === 0);
+        updateTally();
+        save();
+      });
+      prange.addEventListener('change', reflowIfFinished);
+      psw.appendChild(tickBox('this project', pct(p) === 100, function () {
+        p.done = pct(p) === 100 ? 0 : 100;
+        writeNow(); render();
+      }));
+      psw.appendChild(prange);
+      row.appendChild(psw);
+    } else {
+      var bar = el('div', 'bar');
+      p.tasks.forEach(function (t) {
+        var seg = el('span', 'seg');
+        var fill = el('i');
+        fill.style.width = t.done + '%';
+        fill.dataset.task = t.id;
+        seg.appendChild(fill);
+        bar.appendChild(seg);
+      });
+      row.appendChild(bar);
+    }
+
+    var v = pct(p);
+    var pc = el('div', 'pct' + (v === 0 ? ' zero' : ''), v + '%');
+    pc.dataset.role = 'projectPct';
+    row.appendChild(pc);
+
+    row.appendChild(deleteButton('this project', function () {
+      state.projects = state.projects.filter(function (x) { return x.id !== p.id; });
+      save(); render();
+    }));
+
+    row.addEventListener('click', function () { p.open = !p.open; save(); render(); });
+    wrap.appendChild(row);
+    if (p.noteOpen) wrap.appendChild(noteRow(p, 'project', finished));
+
+    /* ----- tasks ----- */
+    var shown = visibleTasks(p);
+    if (filterText && shown.length && !matches(p.name) && !matches(p.note)) wrap.classList.add('open');
+
+    var panel = el('div', 'panel');
+
+    if (!shown.length && filterText) {
+      panel.appendChild(el('div', 'empty', 'No matching tasks.'));
+    }
+
+    shown.forEach(function (t, ti) {
+      var tr = el('div', 'task lv' + t.importance);
+      tr.dataset.tid = t.id;
+
+      tr.appendChild(downButton('this task', p.tasks.indexOf(t) === p.tasks.length - 1, function () {
+        if (!swapDown(p.tasks, t.id)) return;
+        refocus = '.task[data-tid="' + t.id + '"] > .down';
+        writeNow();
+        render();
+      }));
+
+      var tnamecell = el('div', 'namecell');
+      tnamecell.appendChild(nameField(t.name, 'Untitled task', function (val) { t.name = val; save(); }, finished));
+      tnamecell.appendChild(noteButton(t, 'this task', function () {
+        t.noteOpen = !t.noteOpen;
+        save(); render();
+      }));
+      tr.appendChild(tnamecell);
+
+      var td = dueCells(t, 'this task', syncLate, finished);
+      tr.appendChild(td[0]);
+      tr.appendChild(td[1]);
+
+      if (finished) {
+        tr.appendChild(pips(t.importance, null, 'Task', ', ' + LOCKED_HINT.toLowerCase()));
+      } else {
+        tr.appendChild(pips(t.importance, function () {
+          t.importance = t.importance % 4 + 1;
+          save(); render();
+        }, 'Task'));
+      }
+
+      var sw = el('div', 'slider-wrap');
+      var range = document.createElement('input');
+      range.type = 'range';
+      range.min = 0; range.max = 100; range.step = 5;
+      range.value = t.done;
+      range.title = 'Completion';
+      range.style.setProperty('--p', t.done + '%');
+      range.setAttribute('aria-label', 'Completion for ' + (t.name || 'task'));
+      range.addEventListener('input', function () {
+        t.done = Number(range.value);
+        range.style.setProperty('--p', t.done + '%');
+        readout.textContent = t.done + '%';
+        readout.classList.toggle('zero', t.done === 0);
+        var seg = wrap.querySelector('i[data-task="' + t.id + '"]');
+        if (seg) seg.style.width = t.done + '%';
+        var v2 = pct(p);
+        var ppc = wrap.querySelector('[data-role="projectPct"]');
+        ppc.textContent = v2 + '%';
+        ppc.classList.toggle('zero', v2 === 0);
+        updateTally();
+        save();
+      });
+      range.addEventListener('change', reflowIfFinished);
+      sw.appendChild(tickBox('this task', t.done === 100, function () {
+        t.done = t.done === 100 ? 0 : 100;
+        writeNow(); render();
+      }));
+      sw.appendChild(range);
+      tr.appendChild(sw);
+
+      var readout = el('div', 'pct' + (t.done === 0 ? ' zero' : ''), t.done + '%');
+      tr.appendChild(readout);
+
+      tr.appendChild(deleteButton('this task', function () {
+        p.tasks = p.tasks.filter(function (x) { return x.id !== t.id; });
+        save(); render();
+      }));
+
+      panel.appendChild(tr);
+      if (t.noteOpen) panel.appendChild(noteRow(t, 'task', finished));
+    });
+
+    if (finished) {
+      wrap.appendChild(panel);
+      syncLate();
+      return wrap;
+    }
+
+    var ta = el('input', 'adder task-adder');
+    ta.placeholder = 'Add a task, press Enter';
+    ta.autocomplete = 'off';
+    ta.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' || !ta.value.trim()) return;
+      p.tasks.push({ id: uid(), name: ta.value.trim(), importance: 2, done: 0 });
+      save(); render();
+      var next = list.querySelector('[data-id="' + p.id + '"] .task-adder');
+      if (next) next.focus();
+    });
+    panel.appendChild(ta);
+
+    wrap.appendChild(panel);
+    syncLate();
+    return wrap;
+  }
+
+  /* ---------- controls ---------- */
+
+  document.getElementById('newProject').addEventListener('keydown', function (e) {
+    var input = e.target;
+    if (e.key !== 'Enter' || !input.value.trim()) return;
+    state.projects.push({ id: uid(), name: input.value.trim(), importance: 2, open: false, tasks: [] });
+    input.value = '';
+    save(); render();
+  });
+
+  var filterInput = document.getElementById('filter');
+  filterInput.addEventListener('input', function () {
+    filterText = filterInput.value.trim().toLowerCase();
+    render();
+  });
+  filterInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { filterInput.value = ''; filterText = ''; render(); }
+  });
+
+  var clearBtn = document.getElementById('clearDone');
+  var clearArmed = false, clearTimer;
+  function disarmClear() {
+    clearTimeout(clearTimer);
+    clearArmed = false;
+    clearBtn.textContent = 'Clear completed';
+    clearBtn.classList.remove('armed');
+  }
+  clearBtn.addEventListener('click', function () {
+    if (!clearArmed) {
+      clearArmed = true;
+      clearBtn.textContent = 'Remove them?';
+      clearBtn.classList.add('armed');
+      clearTimer = setTimeout(disarmClear, 3000);
+      return;
+    }
+    disarmClear();
+    state.projects = state.projects.filter(function (p) { return pct(p) !== 100; });
+    writeNow(); render();
+  });
+  clearBtn.addEventListener('blur', disarmClear);
+
+  /* ---------- backup ---------- */
+
+  var box = document.getElementById('backupBox');
+  var backupStatus = document.getElementById('backupStatus');
+
+  function say(msg, bad) {
+    backupStatus.textContent = msg;
+    backupStatus.classList.toggle('bad', !!bad);
+    clearTimeout(say.t);
+    say.t = setTimeout(function () { backupStatus.textContent = ''; }, 4000);
+  }
+
+  /* ---------- title ---------- */
+
+  var titleInput = document.getElementById('title');
+
+  titleInput.addEventListener('input', function () {
+    state.title = titleInput.value;
+    document.title = state.title.trim() || 'Projects';
+    save();
+  });
+  titleInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') titleInput.blur();
+  });
+
+  function syncTitle() {
+    if (document.activeElement !== titleInput) titleInput.value = state.title;
+    titleInput.size = Math.max(3, (state.title || '').length + 1);
+    document.title = (state.title || '').trim() || 'Projects';
+  }
+
+  /* "Andrea's Projects" -> "AndreasProjects" */
+  function titleSlug() {
+    var raw = (state.title || '').trim();
+    if (raw.normalize) raw = raw.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    var words = raw.replace(/['\u2018\u2019`]/g, '').split(/[^A-Za-z0-9]+/);
+    var out = '';
+    for (var i = 0; i < words.length; i++) {
+      if (words[i]) out += words[i].charAt(0).toUpperCase() + words[i].slice(1);
+    }
+    return out || 'Projects';
+  }
+
+  function stamp() {
+    var d = new Date();
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+    return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()) +
+      '_' + pad(d.getUTCHours()) + '-' + pad(d.getUTCMinutes()) + '-' + pad(d.getUTCSeconds()) + 'Z';
+  }
+
+  document.getElementById('exportBtn').addEventListener('click', function () {
+    var text = JSON.stringify({ v: SCHEMA, title: state.title, projects: state.projects, sort: state.sort, groups: state.groups, sorts: state.sorts }, null, 2);
+    box.value = text;
+    try {
+      var url = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = titleSlug() + '_' + stamp() + '.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      say('Saved a file and filled the box below');
+    } catch (e) {
+      say('Copy the text below to keep a backup');
+    }
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', function () {
+    if (!box.value) box.value = JSON.stringify({ v: SCHEMA, title: state.title, projects: state.projects, sort: state.sort, groups: state.groups, sorts: state.sorts }, null, 2);
+    box.select();
+    var done = false;
+    try { done = document.execCommand('copy'); } catch (e) {}
+    if (!done && navigator.clipboard) {
+      navigator.clipboard.writeText(box.value).then(function () { say('Copied'); },
+        function () { say('Select the text and copy it by hand', true); });
+      return;
+    }
+    say(done ? 'Copied' : 'Select the text and copy it by hand', !done);
+  });
+
+  var importFile = document.getElementById('importFile');
+  document.getElementById('importBtn').addEventListener('click', function () {
+    importFile.click();
+  });
+  importFile.addEventListener('change', function () {
+    var f = importFile.files && importFile.files[0];
+    if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      box.value = String(reader.result || '');
+      importFile.value = '';
+      say('Loaded ' + f.name + ' \u2014 press Restore to apply');
+    };
+    reader.onerror = function () { say("Couldn't read that file", true); };
+    reader.readAsText(f);
+  });
+
+  var restoreBtn = document.getElementById('restoreBtn');
+  var armed = false, armTimer;
+
+  restoreBtn.addEventListener('click', function () {
+    var raw = box.value.trim();
+    if (!raw) { say('Paste a backup into the box first', true); return; }
+
+    var parsed;
+    try { parsed = JSON.parse(raw); } catch (e) {
+      say("That text isn't a backup", true);
+      return;
+    }
+
+    if (state.projects.length && !armed) {
+      armed = true;
+      restoreBtn.textContent = 'Replace all?';
+      restoreBtn.classList.add('armed');
+      say('This wipes what you have now');
+      armTimer = setTimeout(disarm, 4000);
+      return;
+    }
+
+    try { adopt(parsed); } catch (e) {
+      disarm();
+      say("That text isn't a backup", true);
+      return;
+    }
+    disarm();
+    writeNow();
+    render();
+    say('Restored ' + state.projects.length + (state.projects.length === 1 ? ' project' : ' projects'));
+  });
+
+  function disarm() {
+    clearTimeout(armTimer);
+    armed = false;
+    restoreBtn.textContent = 'Restore';
+    restoreBtn.classList.remove('armed');
+  }
+
+  box.addEventListener('input', disarm);
+
+  load().then(render);
+})();
+</script>
