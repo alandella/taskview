@@ -8,6 +8,8 @@
 
 A **self-contained project and task tracker** that runs entirely in a single HTML file. No build step, server, or accounts necessary. Everything is saved to your browser's local storage on the device you open it on.
 
+You can access it for preview at https://alandella.github.io/taskview/taskview.html
+
 ---
 
 ## Logo
