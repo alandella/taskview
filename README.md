@@ -8,7 +8,7 @@
 
 A **self-contained project and task tracker** that runs entirely in a single HTML file. No build step, server, or accounts necessary. Everything is saved to your browser's local storage on the device you open it on.
 
-You can access it for preview at <https://alandella.github.io/taskview/taskview.html>
+You can access it for preview at <https://alandella.github.io/taskview/index.html>
 
 ---
 
@@ -20,7 +20,7 @@ You can access it for preview at <https://alandella.github.io/taskview/taskview.
 
 ## How it works
 
-Open `taskview.html` in a browser and it renders a board of **projects**, each of which can be expanded to reveal its own list of **tasks**. Every project and task carries an importance level, a completion percentage, and an optional due date. A project with tasks has its completion and importance **automatically averaged** from those tasks; a project with no tasks yet is set by hand.
+Open `index.html` in a browser and it renders a board of **projects**, each of which can be expanded to reveal its own list of **tasks**. Every project and task carries an importance level, a completion percentage, and an optional due date. A project with tasks has its completion and importance **automatically averaged** from those tasks; a project with no tasks yet is set by hand.
 
 Just above the filter box, a summary line tallies the board: total projects, how many are completed, how many are still open at the highest importance level, and how many are late. Clicking the late count filters the board down to just those projects and tasks; click it again, or start typing in the filter box, to clear it.
 
@@ -51,7 +51,7 @@ State is kept in the browser's `localStorage` (or, when the page is opened insid
 
 ## Installation
 
-There is nothing to install. `taskview.html` is a static, self-contained file.
+There is nothing to install. `index.html` is a static, self-contained file.
 
 ### 1. Clone the repository
 
@@ -62,17 +62,17 @@ cd taskview
 
 ### 2. Open it
 
-Double-click `taskview.html`, or open it from your browser with `File > Open`:
+Double-click `index.html`, or open it from your browser with `File > Open`:
 
 ```bash
 # macOS
-open taskview.html
+open index.html
 
 # Windows (PowerShell)
-start taskview.html
+start index.html
 
 # Linux
-xdg-open taskview.html
+xdg-open index.html
 ```
 
 No server, no dependencies, no build step required.
@@ -81,7 +81,7 @@ No server, no dependencies, no build step required.
 
 ## Quickstart
 
-1. Open `taskview.html` in your browser.
+1. Open `index.html` in your browser.
 2. Type a project name into **Add a project** and press Enter.
 3. Click the project row to expand it, then add tasks the same way.
 4. Click the importance pips to set a level and type a due date as `YYYY-MM-DD`.
@@ -185,7 +185,7 @@ Example backup shape:
 
 ## Dependencies
 
-None. `taskview.html` uses only vanilla HTML, CSS, and JavaScript, with no external scripts, stylesheets, or fonts.
+None. `index.html` uses only vanilla HTML, CSS, and JavaScript, with no external scripts, stylesheets, or fonts.
 
 ---
 
