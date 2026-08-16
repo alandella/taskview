@@ -1,4 +1,4 @@
-# taskview - Project and Tasks Viewer
+# taskview - Project & Task Tracker
 
 ![HTML](https://img.shields.io/badge/HTML-single--file-blue)
 ![License](https://img.shields.io/badge/license-MIT-informational)
@@ -6,7 +6,7 @@
 ![Platform](https://img.shields.io/badge/platform-any%20modern%20browser-lightgrey)
 ![Dependencies](https://img.shields.io/badge/deps-none-important)
 
-A **self-contained viewer of projects and related tasks** that runs entirely in a single HTML file. No build step, server, or accounts necessary. Everything is saved to your browser's local storage on the device you open it on.
+A **self-contained project and task tracker** that runs entirely in a single HTML file. No build step, server, or accounts necessary. Everything is saved to your browser's local storage on the device you open it on.
 
 ---
 
@@ -19,6 +19,8 @@ A **self-contained viewer of projects and related tasks** that runs entirely in 
 ## How it works
 
 Open `taskview.html` in a browser and it renders a board of **projects**, each of which can be expanded to reveal its own list of **tasks**. Every project and task carries an importance level, a completion percentage, and an optional due date. A project with tasks has its completion and importance **automatically averaged** from those tasks; a project with no tasks yet is set by hand.
+
+Just above the filter box, a summary line tallies the board: total projects, how many are completed, how many are still open at the highest importance level, and how many are late. Clicking the late count filters the board down to just those projects and tasks; click it again, or start typing in the filter box, to clear it.
 
 State is kept in the browser's `localStorage` (or, when the page is opened inside a Claude artifact, via the artifact's own storage API) and written back on every change, debounced by 250ms so rapid edits don't thrash storage.
 
@@ -34,11 +36,12 @@ State is kept in the browser's `localStorage` (or, when the page is opened insid
 - **Automatic rollups**: a project's completion and importance averaged from its tasks
 - **Four-level importance**: click the pips to cycle a project or task through importance levels 1-4
 - **Due dates**: typed as `YYYY-MM-DD`, with a live countdown and a highlight for anything late
-- **Grouping**: tag projects with an area to group and sort them independently
+- **Grouping**: tag projects with a renameable area to group and sort them independently
 - **Flexible sorting**: sort by attention, due date, completion, importance, name, or manual order
 - **Notes**: attach a free-text note to any project or task
-- **Filtering**: live text filter across project names, task names, notes, and areas
+- **Filtering**: live text filter across names, notes, and areas, plus a one-click filter to what's late
 - **Completed section**: finished projects fade out of the active board into a collapsible section
+- **Undo**: deleting a project, task, or clearing completed projects can be undone for a short window afterward
 - **Backup and restore**: export to a JSON file, copy as text, or import/restore from a pasted backup
 - **Editable title**: the board title is inline-editable and used to name exported backup files
 
@@ -99,10 +102,14 @@ No server, no dependencies, no build step required.
 | Set a due date | Type directly into the due date field, as `YYYY-MM-DD` |
 | Reorder | Click the down arrow to move a row one place down |
 | Group by area | Type an area name into the area field next to an ungrouped project |
+| Rename an area | Click **Rename** in that area's group header, edit the name, press Enter (Escape cancels) |
 | Add a note | Click **note** on a project or task row |
 | Filter the board | Type into the filter box; matches names, notes, and areas |
+| Show only late items | Click the late count in the summary line above the filter box |
 | Rename the board | Click the title at the top and edit it inline |
 | Delete a row | Click the &times; button, then click again to confirm |
+| Undo a delete | Click **Undo** in the toast that appears afterward (available for 15 seconds) |
+| Restore a completed project | Reopen it and mark any one task as unfinished |
 
 > [!NOTE]
 > Importance and completion on a project are only editable directly while it has no tasks. As soon as a task is added, both values roll up automatically from that project's tasks.
@@ -167,10 +174,10 @@ Example backup shape:
 | Environment | Backend used |
 |---|---|
 | Opened inside a Claude artifact | Claude's artifact storage API |
-| Opened as a local file | Browser `localStorage` |
+| Opened as a local file / regular web page | Browser `localStorage` |
 
 > [!TIP]
-> Because storage is scoped to the browser (and, for local files, sometimes to the exact file path), keep a recent export handy if you rely on this across multiple machines or browser profiles. In addition, if a private browser is used, a warning banner appears and **Export** is the only way to keep your data.
+> Because storage is scoped to the browser (and, for local files, sometimes to the exact file path), keep a recent export handy if you rely on this across multiple machines or browser profiles. If storage is blocked, e.g. by some private-browsing modes, a warning banner appears and **Export** becomes the only way to keep your data.
 
 ---
 
