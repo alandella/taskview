@@ -102,14 +102,14 @@ No server, no dependencies, no build step required.
 | Set a due date | Type directly into the due date field, as `YYYY-MM-DD` |
 | Reorder | Click the down arrow to move a row one place down |
 | Group by area | Type an area name into the area field next to an ungrouped project |
-| Rename an area | Click **Rename** in that area's group header, edit the name, press Enter (Escape cancels) |
+| Rename an area | Click **Rename** in that area's group header, edit, hit Enter (Escape cancels) |
 | Add a note | Click **note** on a project or task row |
 | Filter the board | Type into the filter box; matches names, notes, and areas |
 | Show only late items | Click the late count in the summary line above the filter box |
 | Rename the board | Click the title at the top and edit it inline |
 | Delete a row | Click the &times; button, then click again to confirm |
 | Undo a delete | Click **Undo** in the toast that appears afterward (available for 15 seconds) |
-| Restore a completed project | Reopen it and mark any one task as unfinished |
+| Restore project | Reopen it and mark any one task as unfinished |
 
 > [!NOTE]
 > Importance and completion on a project are only editable directly while it has no tasks. As soon as a task is added, both values roll up automatically from that project's tasks.
