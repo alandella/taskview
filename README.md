@@ -6,7 +6,7 @@
 ![Platform](https://img.shields.io/badge/platform-any%20modern%20browser-lightgrey)
 ![Dependencies](https://img.shields.io/badge/deps-none-important)
 
-A **self-contained project and task tracker** that runs entirely in a single HTML file. No build step, server, or accounts necessary. Everything is saved to your browser's local storage on the device you open it on.
+A **self-contained viewer of projects and related tasks** that runs entirely in a single HTML file. No build step, server, or accounts necessary. Everything is saved to your browser's local storage on the device you open it on.
 
 ---
 
