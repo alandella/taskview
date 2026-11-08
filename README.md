@@ -192,6 +192,7 @@ None. `index.html` uses only vanilla HTML, CSS, and JavaScript, with no external
 ## Contributing
 
 Pull requests are welcome.
+
 For major changes, please open an issue first to discuss what you would like to change or add.
 
 ---
